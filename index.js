@@ -68,12 +68,15 @@ app.post("/addCertificate",async(req,res)=>{
         const certificateJson = {
             certificate_no : req.body.certificate_no,
             name : req.body.name,
-            internship_track : req.body.internship_track,
+            mobileNo : req.body.mobileNo,
+            email : req.body.email,
             college : req.body.college,
-            LoR : req.body.lor,
+            internship_duration : req.body.internship_duration,
+            internship_track : req.body.internship_track,
+            internship_status : "running",
             start_date : req.body.start_date,
             end_date : req.body.end_date,
-            issue_date : req.body.issue_date,
+            issue_date : "pending",
         };
 
         const result = await db.collection("certificate").doc(certificateJson.certificate_no).set(certificateJson);
