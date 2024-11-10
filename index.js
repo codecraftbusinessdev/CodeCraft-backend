@@ -27,7 +27,6 @@ app.get("/", (req, res) => {
 
 });
 
-
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'uploads/');
@@ -42,7 +41,6 @@ const upload = multer({ storage });
 //Offer Letter Email
 app.post('/upload', upload.single('file'), (req, res) => {
 
-    console.log("Request is arrived");
 
     const email = req.body.email;
     const name = req.body.name;
@@ -51,7 +49,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
     const startdate = req.body.startdate;
     const enddate = req.body.enddate;
 
-    console.log(email);
+    console.log("Sending mail to " + email);
 
     if (!req.file) {
         return res.status(400).json({ error: 'No file uploaded' });
@@ -70,7 +68,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
         from: 'hr.codecraft.infotech@gmail.com',
         to: email,
         subject: 'Congratulations, you have been Selected for the Internship!',
-        html: '<h1 > CODECRAFT INFOTECH </h1> <br><p>Dear ' + name + ',' + '</p><p>We are pleased to inform you that you have been selected for the ' + track +' Internship Program at CodeCraft InfoTech! Congratulations on this exciting achievement!</p> <p>As a '+ track +' intern, you will have the opportunity to gain hands-on experience and develop valuable skills that will prepare you for your future career. Our program is designed to challenge you, support your growth, and provide you with a meaningful and rewarding experience.</P> <P>Enclosed with this email, you will find your Offer Letter. We kindly request that you consult the <a href="https://www.canva.com/design/DAGU8eRlmEY/E_jP0ALiPMNnz0aYutqQSA/view" >Task Lists Document</a> Document to fully understand your assigned roles and responsibilities during the course of your internship.</P><h3>During your internship at CodeCraft InfoTech, please keep in mind the following points:</h3><p>1. It is mandatory that you update your LinkedIn profile and share your Offer Letter on LinkedIn.</p><p>2. Following the completion of each task, it is mandatory that you create a post on LinkedIn outlining the tasks you have completed and the knowledge gained. You may choose to include a video in your post, but it is optional.</p><p>3. It is compulsory that you tag <a href="https://linkedin.com/company/codecraft-infotech">CodeCraftInfoTech</a> and use the hashtag #CodeCraftInfoTech in all posts related to your internship as part of our social media policy.</p><p>4. For submission of your completed tasks, a Task Submission Form will be sent to you by a separate email after 10-15 days from now. You dont need to email your tasks to us.</p><p>5. The internship program is unpaid, and no monetary compensation will be provided. The program offers certificates & LoR upon successful completion of assigned tasks and meeting the program requirements.</p><h1>Timeline</h1><h2>Start Date : '+ startdate +'</h2><h2>End Date : '+ enddate +'</h2><h2>Submission : Submit before '+ enddate +'</h2><br><h2>Once you submit submission form you will receive internship certificate by a mail within 1-2 days.</h2><br><h2><a href="https://www.canva.com/design/DAGU8eRlmEY/E_jP0ALiPMNnz0aYutqQSA/view"><button style="background-color: #008CBA;">Click here to visit your tasks</button></a></h2>',
+        html: '<h1 > CODECRAFT INFOTECH </h1> <br><p>Dear ' + name + ',' + '</p><p>We are pleased to inform you that you have been selected for the ' + track +' Internship Program at CodeCraft InfoTech! Congratulations on this exciting achievement!</p> <p>As a '+ track +' intern, you will have the opportunity to gain hands-on experience and develop valuable skills that will prepare you for your future career. Our program is designed to challenge you, support your growth, and provide you with a meaningful and rewarding experience.</P> <P>Enclosed with this email, you will find your Offer Letter. We kindly request that you consult the <a href="https://www.canva.com/design/DAGU8eRlmEY/E_jP0ALiPMNnz0aYutqQSA/view" >Task Lists Document</a> Document to fully understand your assigned roles and responsibilities during the course of your internship.</P><br><h3>During your internship at CodeCraft InfoTech, please keep in mind the following points:</h3><p>1. It is mandatory that you update your LinkedIn profile and share your Offer Letter on LinkedIn.</p><p>2. Following the completion of each task, it is mandatory that you create a post on LinkedIn outlining the tasks you have completed and the knowledge gained. You may choose to include a video in your post, but it is optional.</p><p>3. It is compulsory that you tag <a href="https://linkedin.com/company/codecraft-infotech">CodeCraftInfoTech</a> and use the hashtag #CodeCraftInfoTech in all posts related to your internship as part of our social media policy.</p><p>4. For submission of your completed tasks, a Task Submission Form will be sent to you by a separate email after 10-15 days from now. You dont need to email your tasks to us.</p><p>5. The internship program is unpaid, and no monetary compensation will be provided. The program offers certificates & LoR upon successful completion of assigned tasks and meeting the program requirements.</p><br><h1>Timeline</h1><h2>Start Date : '+ startdate +'</h2><h2>End Date : '+ enddate +'</h2><h2>Submission : Submit before '+ enddate +'</h2><br><h2>Once you submit submission form you will receive internship certificate by a mail within 1-2 days.</h2><br><h2><a href="https://www.canva.com/design/DAGU8eRlmEY/E_jP0ALiPMNnz0aYutqQSA/view"><button style="background-color: #008CBA;">Click here to visit your tasks</button></a></h2>',
         attachments: [
             {
                 filename: 'Offer_Letter.pdf', // <= Here: made sure file name match
@@ -85,7 +83,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
         if (error) {
             console.log(error);
         } else {
-            console.log("success");
+            console.log("Email send successfully to : " + name + " | " + email);
         }
 
     })
@@ -152,13 +150,11 @@ app.post('/certificatemail', upload.single('file'), (req, res) => {
 app.post('/submissionmail',(req, res) => {
     
 
-    console.log("Request is arrived");
-
     const email = req.body.email;
     const name = req.body.name;
     const enddate = req.body.enddate;
 
-    console.log(email);
+    console.log("Sending mail to " + email);
 
     var transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -179,7 +175,7 @@ app.post('/submissionmail',(req, res) => {
         if (error) {
             console.log(error);
         } else {
-            console.log("success");
+            console.log("Email send successfully to : " + name + " | " + email);
         }
 
     })
