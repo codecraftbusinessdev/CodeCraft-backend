@@ -423,6 +423,39 @@ app.post('/submissionmail',(req, res) => {
 });
 
 
+app.post('/resubmissionmail',(req, res) => {
+    
+    const email = req.body.email;
+    const name = req.body.name;
+    const enddate = req.body.enddate;
+
+    console.log("Sending mail to " + email);
+
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'hr.codecraft.infotech@gmail.com',
+            pass: 'gnkdjcrplzbrhcgd'
+        }
+    });
+
+    var mailOptions = {
+        from: 'hr.codecraft.infotech@gmail.com',
+        to: email,
+        subject: 'Attention: Deadline Extended for Internship Submission Form',
+        html: '<h1 > CODECRAFT INFOTECH </h1> <br><p>Dear ' + name + ',' + '</p> <p>Greetings! We hope this email finds you in good health. We wanted to remind you that the <a href="https://docs.google.com/forms/d/e/1FAIpQLSd5tT6S2TquQRdonSopo3VVskxKkgUr7N2DqJYrFkE9TQMe7Q/viewform?usp=sf_link" >Internship Submission Form</a> is open and available to submit your internship work.</p> <p>Please ensure timely submission of your <a href="https://www.canva.com/design/DAGU8eRlmEY/E_jP0ALiPMNnz0aYutqQSA/view?utm_content=DAGU8eRlmEY&utm_campaign=designshare&utm_medium=link&utm_source=viewer" >Internship Tasks</a> in order to be eligible for the Verified Certificate of Completion.</p> <br><h2><a href="https://docs.google.com/forms/d/e/1FAIpQLSd5tT6S2TquQRdonSopo3VVskxKkgUr7N2DqJYrFkE9TQMe7Q/viewform?usp=sf_link"><button style="background-color: #008CBA;">Click here to open submmision form</button></a></h2><p>Please ensure timely submission of your work in order to be eligible for the Verified Certificate. Late submissions will result in a delay in the release of the certificate.<p/><p>The extended deadline for submission is 11:59 PM IST on ' + enddate +'.</p><p>We appreciate your hard work and dedication to this internship program.</p>'
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log("Email send successfully to : " + name + " | " + email);
+        }
+        res.json({message : "Success"});
+    })
+});
+
 app.post('/paymentconfirmation',(req, res) => {
     
     const email = req.body.email;
