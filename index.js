@@ -571,44 +571,60 @@ app.post('/submissionmail',(req, res) => {
                         background-color: #f7f7f7;
                     }
                     /* All other styles are inlined for maximum email client compatibility */
+    
+                    /* Media query for responsive button */
+                    @media screen and (max-width: 600px) {
+                        .mobile-full-width-button {
+                            width: 100% !important;
+                            display: block !important;
+                        }
+                        .mobile-button-cell {
+                            padding-left: 0 !important;
+                            padding-right: 0 !important;
+                        }
+                    }
                 </style>
             </head>
             <body style="margin: 0; padding: 20px; background-color: #f7f7f7; font-family: 'Poppins', Arial, 'Helvetica Neue', Helvetica, sans-serif;">
                 <div style="width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
                     
-                    <!-- Header -->
                     <div style="background-color: #004d7a; color: #ffffff; padding: 25px 30px; text-align: center;">
                         <h1 style="margin: 0; font-size: 24px; font-weight: 700;">CodeCraft InfoTech</h1>
                     </div>
     
-                    <!-- Body -->
                     <div style="padding: 30px 40px;">
                         <h2 style="font-size: 22px; color: #004d7a; margin-top: 0; font-weight: 600;">Internship Task Submission</h2>
                         <p style="font-size: 16px; margin-bottom: 20px;">Dear ${name},</p>
                         <p style="font-size: 16px;">We hope you're having a productive internship experience! This email contains the link to the official form for submitting your completed tasks.</p>
                         <p style="font-size: 16px;">Please ensure all your work is submitted via the form to be eligible for your Certificate of Completion.</p>
                         
-                        <!-- Deadline Section -->
                         <div style="background-color: #fffbe6; border-left: 4px solid #facc15; padding: 15px 20px; margin: 30px 0; border-radius: 4px;">
                             <h3 style="margin: 0 0 10px 0; color: #b45309; font-size: 18px; font-weight: 600;">Submission Deadline</h3>
                             <p style="margin: 0; font-size: 15px;">All tasks must be submitted by <strong>11:59 PM IST on ${enddate}</strong>.</p>
                         </div>
     
-                        <!-- CTA Button -->
                         <div style="text-align: center; margin: 40px 0 20px;">
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSd5tT6S2TquQRdonSopo3VVskxKkgUr7N2DqJYrFkE9TQMe7Q/viewform?usp=sf_link" target="_blank" style="background-color: #008CBA; color: #ffffff; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px;">Open Submission Form</a>
+                            <table border="0" cellpadding="0" cellspacing="0" class="mobile-full-width-button" style="margin: 0 auto;">
+                                <tr>
+                                    <td align="center" class="mobile-button-cell" style="background-color: #008CBA; border-radius: 5px;">
+                                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd5tT6S2TquQRdonSopo3VVskxKkgUr7N2DqJYrFkE9TQMe7Q/viewform?usp=sf_link" target="_blank" 
+                                           style="font-size: 16px; font-weight: bold; text-decoration: none; color: #ffffff; padding: 15px 30px; display: inline-block; border-radius: 5px;">
+                                            Open Submission Form
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
     
                         <p style="font-size: 16px;">We appreciate your hard work and look forward to reviewing your submissions.</p>
                         <p style="font-size: 16px; margin-top: 30px;">Best Regards,<br>The Team at CodeCraft InfoTech</p>
                     </div>
     
-                    <!-- Footer -->
                     <div style="background-color: #f1f5f9; color: #64748b; padding: 20px; text-align: center; font-size: 12px;">
                         <p style="margin: 0;">&copy; ${new Date().getFullYear()} CodeCraft InfoTech. All Rights Reserved.</p>
                     </div>
                 </div>
-            </body>
+            </body> 
             </html>
         `,
         attachments: [] // No attachments for this email
@@ -943,25 +959,121 @@ app.post('/genPdf', async (req, res) => {
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'hr.codecraft.infotech@gmail.com',
-            pass: 'gnkdjcrplzbrhcgd'
+            user: 'hr.codecraft.info@gmail.com',
+            pass: 'pfakrusrcdhhpfsq'
         }
     });
 
+    // var mailOptions = {
+    //     from: 'hr.codecraft.infotech@gmail.com',
+    //     to: email,
+    //     subject: 'Congratulations, you have been Selected for the Internship!',
+    //     html: '<h1 > CODECRAFT INFOTECH </h1> <br><p>Dear ' + name + ',' + '</p><p>We are pleased to inform you that you have been selected for the ' + track +' Internship Program at CodeCraft InfoTech! Congratulations on this exciting achievement!</p> <p>As a '+ track +' intern, you will have the opportunity to gain hands-on experience and develop valuable skills that will prepare you for your future career. Our program is designed to challenge you, support your growth, and provide you with a meaningful and rewarding experience.</P> <P>Enclosed with this email, you will find your Offer Letter. We kindly request that you consult the <a href="https://www.canva.com/design/DAGU8eRlmEY/E_jP0ALiPMNnz0aYutqQSA/view" >Task Lists Document</a> Document to fully understand your assigned roles and responsibilities during the course of your internship.</P><br><h1>Timeline</h1><h2>Start Date : '+ startdate +'</h2><h2>End Date : '+ enddate +'</h2><h2>Submission : Submit before '+ enddate +'</h2><br><h2>For submission of your completed tasks, a Task Submission Form will be sent to you by a separate email after 10-15 days from now. </h2><br><h2>Once you submit submission form you will receive internship certificate by a mail within 1-2 days.</h2><br><h2><a href="https://www.canva.com/design/DAGU8eRlmEY/E_jP0ALiPMNnz0aYutqQSA/view" ><u>Visit Task Link</u></a> and you have to complete any '+ noOfTaskToComplete +' out 5 tasks from your selected domain.</h2><br><h2><a href="https://www.canva.com/design/DAGU8eRlmEY/E_jP0ALiPMNnz0aYutqQSA/view"><button style="background-color: #008CBA;">Click here to visit your tasks</button></a></h2>',
+    //     attachments: [
+    //         {
+    //             filename: 'Offer_Letter.pdf', // <= Here: made sure file name match
+    //             path: './uploads/Offer_Letter.pdf', // <= Here
+    //             contentType: 'application/pdf'
+    //         }
+    //     ]
+    // };
+
     var mailOptions = {
-        from: 'hr.codecraft.infotech@gmail.com',
-        to: email,
-        subject: 'Congratulations, you have been Selected for the Internship!',
-        html: '<h1 > CODECRAFT INFOTECH </h1> <br><p>Dear ' + name + ',' + '</p><p>We are pleased to inform you that you have been selected for the ' + track +' Internship Program at CodeCraft InfoTech! Congratulations on this exciting achievement!</p> <p>As a '+ track +' intern, you will have the opportunity to gain hands-on experience and develop valuable skills that will prepare you for your future career. Our program is designed to challenge you, support your growth, and provide you with a meaningful and rewarding experience.</P> <P>Enclosed with this email, you will find your Offer Letter. We kindly request that you consult the <a href="https://www.canva.com/design/DAGU8eRlmEY/E_jP0ALiPMNnz0aYutqQSA/view" >Task Lists Document</a> Document to fully understand your assigned roles and responsibilities during the course of your internship.</P><br><h1>Timeline</h1><h2>Start Date : '+ startdate +'</h2><h2>End Date : '+ enddate +'</h2><h2>Submission : Submit before '+ enddate +'</h2><br><h2>For submission of your completed tasks, a Task Submission Form will be sent to you by a separate email after 10-15 days from now. </h2><br><h2>Once you submit submission form you will receive internship certificate by a mail within 1-2 days.</h2><br><h2><a href="https://www.canva.com/design/DAGU8eRlmEY/E_jP0ALiPMNnz0aYutqQSA/view" ><u>Visit Task Link</u></a> and you have to complete any '+ noOfTaskToComplete +' out 5 tasks from your selected domain.</h2><br><h2><a href="https://www.canva.com/design/DAGU8eRlmEY/E_jP0ALiPMNnz0aYutqQSA/view"><button style="background-color: #008CBA;">Click here to visit your tasks</button></a></h2>',
+        from: 'hr.codecraft.info@gmail.com',
+        to: email, // This will be the recipient's email address
+        subject: `Congratulations ${name}, you have been Selected for the Internship!`,
+        // The beautiful, responsive HTML content for the email body
+        html: `
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Internship Offer</title>
+                <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+                <style>
+                    body {
+                        font-family: 'Poppins', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+                        line-height: 1.6;
+                        color: #333333;
+                        margin: 0;
+                        padding: 0;
+                        background-color: #f7f7f7;
+                    }
+                    /* All other styles are inlined for maximum email client compatibility */
+                </style>
+            </head>
+            <body style="margin: 0; padding: 20px; background-color: #f7f7f7; font-family: 'Poppins', Arial, 'Helvetica Neue', Helvetica, sans-serif;">
+                <div style="width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                    
+                    <!-- Header -->
+                    <div style="background-color: #004d7a; color: #ffffff; padding: 25px 30px; text-align: center;">
+                        <h1 style="margin: 0; font-size: 24px; font-weight: 700;">CodeCraft InfoTech</h1>
+                    </div>
+    
+                    <!-- Body -->
+                    <div style="padding: 30px 40px;">
+                        <h2 style="font-size: 22px; color: #004d7a; margin-top: 0; font-weight: 600;">Welcome Aboard!</h2>
+                        <p style="font-size: 16px; margin-bottom: 20px;">Dear ${name},</p>
+                        <p style="font-size: 16px;">Congratulations! We are thrilled to offer you a position for the <strong>${track} Internship Program</strong> at CodeCraft InfoTech. Your skills and passion stood out, and we can't wait to see you grow with us.</p>
+                        <p style="font-size: 16px;">This internship is a fantastic opportunity to gain hands-on experience and build a strong foundation for your career. Your official Offer Letter is attached to this email.</p>
+                        
+                        <!-- Timeline Section -->
+                        <div style="background-color: #f0f8ff; border-left: 4px solid #008CBA; padding: 15px 20px; margin: 30px 0; border-radius: 4px;">
+                            <h3 style="margin: 0 0 10px 0; color: #004d7a; font-size: 18px; font-weight: 600;">Your Internship Timeline</h3>
+                            <p style="margin: 5px 0; font-size: 15px;"><strong>Start Date:</strong> ${startdate}</p>
+                            <p style="margin: 5px 0; font-size: 15px;"><strong>End Date:</strong> ${enddate}</p>
+                            <p style="margin: 5px 0; font-size: 15px;"><strong>Final Task Submission:</strong> On or before ${enddate}</p>
+                        </div>
+    
+                        <!-- Key Requirements Section -->
+                        <div>
+                            <h3 style="color: #004d7a; border-bottom: 2px solid #eeeeee; padding-bottom: 10px; font-size: 18px; font-weight: 600;">Program Requirements</h3>
+                            <ul style="list-style-type: none; padding-left: 0; font-size: 15px;">
+                                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #008CBA; font-weight: bold; font-size: 18px; top: -2px;">✔</span>
+                                    <strong>LinkedIn Profile:</strong> Please update your profile and share your attached Offer Letter on LinkedIn to announce your new role.
+                                </li>
+                                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #008CBA; font-weight: bold; font-size: 18px; top: -2px;">✔</span>
+                                    <strong>Task Updates:</strong> After completing each task, share a post on LinkedIn about your work and learnings. Tag <a href="https://linkedin.com/company/codecraft-infotech" style="color: #008CBA; text-decoration: none; font-weight: bold;">CodeCraftInfoTech</a> and use the hashtag #CodeCraftInfoTech.
+                                </li>
+                                <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #008CBA; font-weight: bold; font-size: 18px; top: -2px;">✔</span>
+                                    <strong>Task Submission:</strong> A link to the Task Submission Form will be emailed to you in 10-15 days. There is no need to email your tasks to us.
+                                </li>
+                                <li style="padding-left: 30px; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #008CBA; font-weight: bold; font-size: 18px; top: -2px;">✔</span>
+                                    <strong>Compensation:</strong> This is an unpaid internship focused on skill development. A Certificate and Letter of Recommendation (LoR) are provided upon successful completion.
+                                </li>
+                            </ul>
+                        </div>
+    
+                        <!-- CTA Button -->
+                        <div style="text-align: center; margin: 40px 0 20px;">
+                            <a href="https://www.canva.com/design/DAGU8eRlmEY/E_jP0ALiPMNnz0aYutqQSA/view" target="_blank" style="background-color: #008CBA; color: #ffffff; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px;">View Your Tasks</a>
+                        </div>
+    
+                        <p style="font-size: 16px;">We're excited to have you on the team!</p>
+                        <p style="font-size: 16px; margin-top: 30px;">Best Regards,<br>The Team at CodeCraft InfoTech</p>
+                    </div>
+    
+                    <!-- Footer -->
+                    <div style="background-color: #f1f5f9; color: #64748b; padding: 20px; text-align: center; font-size: 12px;">
+                        <p style="margin: 0;">&copy; ${new Date().getFullYear()} CodeCraft InfoTech. All Rights Reserved.</p>
+                    </div>
+                </div>
+            </body>
+            </html>
+        `,
         attachments: [
             {
-                filename: 'Offer_Letter.pdf', // <= Here: made sure file name match
-                path: './uploads/Offer_Letter.pdf', // <= Here
+                filename: 'Offer_Letter.pdf',
+                path: './uploads/document.pdf',
                 contentType: 'application/pdf'
             }
         ]
     };
-
 
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
