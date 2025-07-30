@@ -1069,7 +1069,7 @@ app.post('/genPdf', async (req, res) => {
         attachments: [
             {
                 filename: 'Offer_Letter.pdf',
-                path: './uploads/document.pdf',
+                path: './uploads/Offer_Letter.pdf',
                 contentType: 'application/pdf'
             }
         ]
